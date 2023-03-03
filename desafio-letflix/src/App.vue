@@ -1,41 +1,62 @@
 <script setup>
-import HeaderVue from './components/Header.vue';
-import CardsVue from './components/Cards.vue';
-// import jsonTest from './mock/test.json'
-import {ref} from "vue"
-import axios from "axios"
+import HeaderVue from "./components/Header.vue";
+import CardsVue from "./components/Cards.vue";
+// Sempre bom lembrar de importar as funções
+import { ref, watch, onMounted } from "vue";
+import axios from "axios";
 
-const movie = ref('')
-const jsonResponse = ref(null)
-const resultJson = ref([])
+const movie = ref("");
+const jsonResponse = ref([]);
 
-
-function searchAxio() {
-axios.get("https://api.tvmaze.com/shows")
-    .then((response) => {
-      updateFilteredAxios(response.data)
-    })
+async function filteredJson() {
+  
+  // substituindo a variavel pela filtragem
+  jsonResponse.value = jsonResponse.value.filter((item) =>
+  item.name.toLowerCase().includes(movie.value.toLowerCase())
+  )
 }
 
-function updateFilteredAxios(result) {
-  result.filter(item => item)
+async function getMovies() {
+  await axios
+  .get("https://api.tvmaze.com/shows")
+  /**
+   * Depois que for realizado o FETCH na API, o valor retornado está sendo
+   * desestruturado e sendo armazenado na variavel 'jsonResponse'
+   */
+  .then(({ data }) => (jsonResponse.value = data))
+  // Caso de um erro, será efetuado um console.error
+  .catch(console.error);
 }
 
-searchAxio()
+// Todas vez que a váriavel 'movie' ser alterada, a função 'filteredJson' será executada
+watch(movie, filteredJson);
 
+// após a página ser montada, será executada a função 'getMovies'
+
+/**
+ * Resolva o problema de pesquisa 
+ * Dica:
+ * 1. Use uma variavel reativa para pesquisa
+ * 2. Use o methodo computed para testa se a variável de pesquisa existe (https://vuejs.org/guide/essentials/computed.html)
+ * */ 
+
+onMounted(getMovies);
+// computed: {
+//   now(() => {
+// return
 </script>
-
 <template>
-  <HeaderVue v-model:movie="movie"/>
+  <HeaderVue v-model:movie="movie" />
   <div class="main">
-    <h1> Filmes e Séries:</h1>
+  <h1>Filmes e Séries</h1>
     <div class="grid-cards">
-      <!-- Você esta pegando o resultado de filteredJson, e nele não tem nenhum tratamento, você precisa retornar o valor da sua função -->
-      <!-- O seu key, você está passando o item completo, em vez do item.title -->
-      <!-- O key continua errado -->
-      <!-- os ID não se repetem e são os mais seguros para colocar dentro do key -->
-      <CardsVue v-for="item in searchAxio()" :key="item.id" :name="item.name" :image="item.image.original" />
-      <!-- todos os cards sumiirammm aaa -->
+      <CardsVue
+      v-for="item in jsonResponse"
+        :key="item.id"
+        :name="item.name"
+        :url="item.url"
+        :image="item.image.medium"
+      />
     </div>
   </div>
 </template>
@@ -50,11 +71,10 @@ searchAxio()
 .main h1 {
   padding-bottom: 40px;
   padding-left: 35px;
-}  
+}
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(5,1fr);
-  gap: 40px;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 30px;
 }
-
 </style>

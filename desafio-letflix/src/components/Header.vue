@@ -9,7 +9,7 @@ defineEmits(['update:movie'])
   <header>
     <div class="left">
       <img src="../assets/icons/icon_letflix.png" alt="">
-      <a href="#inicio">Início</a>
+      <a href="./Inicio.vue">Início</a>
       <a href="#series">Séries</a>
       <a href="#filmes">Filmes</a>
       <a href="#bombando">Bombando</a>
@@ -17,7 +17,8 @@ defineEmits(['update:movie'])
       <a href="#idiomas">Navegar por idiomas</a>
     </div>
     <div class="right">
-      <input id="movie" type="text" placeholder="Pesquisar filme:" @input="$emit('update:movie', $event.target.value)" :value="movie" >
+      <input id="movie" type="text"  @input="$emit('update:movie', $event.target.value)" :value="movie" placeholder="Pesquisar filme:" >
+      <p>{{ movie }}</p>
     </div>
   </header>
   
