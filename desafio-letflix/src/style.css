@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Gloock&display=swap');
 :root {
   --bg-header: #525252;
   --bg-main: #363839;
   --color-all: #FFFFFF;
   --color-input: #000;
-  --color-name: #CBCBCB
+  --color-name: #CBCBCB;
+  --bg-button-app:rgba(203, 203, 203, 0.2);
+  --bg-chosen-movie:rgba(33, 47, 60, 0.7);
 }
 * {
   margin: 0;

@@ -1,20 +1,15 @@
 <script setup>
 import HeaderVue from "./components/Header.vue";
 import CardsVue from "./components/Cards.vue";
+import RandomMovieVue from "./components/RandomMovie.vue"
 // Sempre bom lembrar de importar as funções
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 
 const movie = ref("");
 const jsonResponse = ref([]);
-
-async function filteredJson() {
-  
-  // substituindo a variavel pela filtragem
-  jsonResponse.value = jsonResponse.value.filter((item) =>
-  item.name.toLowerCase().includes(movie.value.toLowerCase())
-  )
-}
+const search = ref(jsonResponse | '')
+const randomMovie = ref([])
 
 async function getMovies() {
   await axios
@@ -26,55 +21,78 @@ async function getMovies() {
   .then(({ data }) => (jsonResponse.value = data))
   // Caso de um erro, será efetuado um console.error
   .catch(console.error);
+  await randoMovil()
+  console.log(randomMovie.value);
 }
+// computed: { 
+  async function filteredJson() {  
+    // substituindo a variavel pela filtragem
+    search.value = jsonResponse.value.filter((item) => item.name.toLowerCase().includes(movie.value.toLowerCase()))
+  }
+  //   filteredJson(() => {
+    //     return (filteredJson)
+    
+    //   })
+    // }  
+    // Todas vez que a váriavel 'movie' ser alterada, a função 'filteredJson' será executada
+    watch(movie, filteredJson);
+    
 
-// Todas vez que a váriavel 'movie' ser alterada, a função 'filteredJson' será executada
-watch(movie, filteredJson);
+    async function randoMovil() {
+       return  randomMovie.value = jsonResponse.value[Math.floor(Math.random() * jsonResponse.value.length)] 
+    }
 
 // após a página ser montada, será executada a função 'getMovies'
 
-/**
- * Resolva o problema de pesquisa 
- * Dica:
- * 1. Use uma variavel reativa para pesquisa
- * 2. Use o methodo computed para testa se a variável de pesquisa existe (https://vuejs.org/guide/essentials/computed.html)
- * */ 
-
 onMounted(getMovies);
-// computed: {
-//   now(() => {
-// return
 </script>
 <template>
   <HeaderVue v-model:movie="movie" />
   <div class="main">
-  <h1>Filmes e Séries</h1>
-    <div class="grid-cards">
-      <CardsVue
-      v-for="item in jsonResponse"
+    <div class="chosen-movie">
+      <RandomMovieVue 
+      :key="randomMovie.id"
+      :name="randomMovie.name"
+      :summary="randomMovie.summary" 
+      /> 
+      </div>
+      <h1>Continuar assistindo como </h1>
+      <div class="grid-cards">
+        <CardsVue
+        v-for="item in search.value"
         :key="item.id"
         :name="item.name"
         :url="item.url"
         :image="item.image.medium"
-      />
+        />
+      </div>
     </div>
-  </div>
 </template>
 
 <style scoped>
 .main {
   width: 100vw;
   height: 90vh;
-  margin-top: 100px;
 }
 
 .main h1 {
-  padding-bottom: 40px;
+  padding-bottom: 70px;
   padding-left: 35px;
+  font-size: larger;
 }
+
+.main .chosen-movie{
+  background-color:var(--bg-chosen-movie);
+  height: 700px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+
 .grid-cards {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
+  grid-template-columns: repeat(7, 235px);
   gap: 30px;
 }
 </style>

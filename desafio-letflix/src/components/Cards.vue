@@ -17,7 +17,7 @@ defineProps({
 
 <style scoped>
 article {
-    width: 350px;
+    width: 300px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -28,20 +28,21 @@ article {
 
 article a {
     width: 250px;
-    font-family: 'Gloock', serif;
     font-size: larger;
     font-weight: 200;
     text-decoration: none;
+    
 }
 
 
 article h1 {
     width: 250px;
-    font-family: 'Gloock', serif;
     font-size: larger;
     font-weight: 200;
     color: var(--color-name) ;
+    
 }
+
 
 article:hover {
     transform: scale(1.2);
