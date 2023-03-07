@@ -22,7 +22,7 @@ async function getMovies() {
   // Caso de um erro, será efetuado um console.error
   .catch(console.error);
   await randoMovil()
-  console.log(randomMovie.value);
+  await filteredJson()
 }
 // computed: { 
   async function filteredJson() {  
@@ -52,14 +52,16 @@ onMounted(getMovies);
     <div class="chosen-movie">
       <RandomMovieVue 
       :key="randomMovie.id"
+      :image="randomMovie.image"
       :name="randomMovie.name"
       :summary="randomMovie.summary" 
+      :url="randomMovie.url" 
       /> 
       </div>
       <h1>Continuar assistindo como </h1>
       <div class="grid-cards">
         <CardsVue
-        v-for="item in search.value"
+        v-for="item in search"
         :key="item.id"
         :name="item.name"
         :url="item.url"

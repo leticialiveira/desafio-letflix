@@ -1,18 +1,21 @@
 <script setup lang="ts">
 defineProps({
-    image:Object,
+    image:String,
     name: String,
-    summary: String
+    summary: String,
+    url: String
 })
 </script>
 
 <template>
-    <img :src="image" alt="">
+    <img :src="image" alt=" ">
     <div class="test">
       <h1 >{{name}}</h1>
       <p>{{ summary}}</p>
       <div class="buttons">
-        <button> Assistir</button>
+        <a :href="url">
+          <button> Assistir</button>
+        </a>
         <button>Mais informações</button>
       </div>
     </div>
@@ -22,9 +25,10 @@ defineProps({
 <style scoped>
 
 
-/* img {
+img {
   width: 465px;
-} */
+  background-color: var(--bg-image);
+}
 
 .test{
   display: flex;
@@ -51,10 +55,10 @@ p {
   margin: 10px;
   border-radius: 5%;
 }
-.buttons button:nth-last-of-type(2){
+.buttons a button{
   color: var(--color-input);
 }
-.buttons button:nth-last-of-type(1){
+.buttons button{
   background-color:var(--bg-button-app);
   
 }
