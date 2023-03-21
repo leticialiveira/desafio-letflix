@@ -1,6 +1,7 @@
 <script setup lang="ts">
 defineProps({
     image:String,
+    original:String,
     name: String,
     summary: String,
     url: String
@@ -8,7 +9,6 @@ defineProps({
 </script>
 
 <template>
-    <img :src="image" alt=" ">
     <div class="test">
       <h1 >{{name}}</h1>
       <p>{{ summary}}</p>
@@ -16,8 +16,15 @@ defineProps({
         <a :href="url">
           <button> Assistir</button>
         </a>
-        <button>Mais informações</button>
+        <button >Mais informações</button>
       </div>
+      <!-- <div class="testando">
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+        <button></button>
+      </div> -->
     </div>
       
 </template>
@@ -57,9 +64,30 @@ p {
 }
 .buttons a button{
   color: var(--color-input);
+  background-color: var(--color-all);
+}
+
+.buttons a button:hover{
+  background-color: var(--bg-button-app);
 }
 .buttons button{
   background-color:var(--bg-button-app);
   
 }
+
+/* .testando {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+}
+
+.testando button{
+  border-radius: 50%;
+  background-color: whitesmoke;
+  width: 15px;
+  height: 15px;
+  border: 0;
+} */
+
 </style>

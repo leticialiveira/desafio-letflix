@@ -37,13 +37,16 @@ async function getMovies() {
     // Todas vez que a váriavel 'movie' ser alterada, a função 'filteredJson' será executada
     watch(movie, filteredJson);
     
-
     async function randoMovil() {
        return  randomMovie.value = jsonResponse.value[Math.floor(Math.random() * jsonResponse.value.length)] 
     }
 
-// após a página ser montada, será executada a função 'getMovies'
+    // !tentativa de filtro pra pegar a linguagem de cada 
+    // async function movieLanguages (){
+    //   return search.value = jsonResponse.language.value.filter((item) => item.language)
+    // }
 
+// após a página ser montada, será executada a função 'getMovies'
 onMounted(getMovies);
 </script>
 <template>
@@ -52,7 +55,7 @@ onMounted(getMovies);
     <div class="chosen-movie">
       <RandomMovieVue 
       :key="randomMovie.id"
-      :image="randomMovie.image"
+      :image="randomMovie.original"
       :name="randomMovie.name"
       :summary="randomMovie.summary" 
       :url="randomMovie.url" 
