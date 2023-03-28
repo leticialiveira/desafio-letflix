@@ -2,7 +2,6 @@
 import HeaderVue from "./components/Header.vue";
 import CardsVue from "./components/Cards.vue";
 import RandomMovieVue from "./components/RandomMovie.vue"
-// Sempre bom lembrar de importar as funções
 import { ref, watch, onMounted } from "vue";
 import axios from "axios";
 
